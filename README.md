@@ -1,12 +1,12 @@
 # DoTweenExt
 A bunch of extension methods when using DoTween
 
-###Installation
+### Installation and usage
 *The project must have DoTween installed, otherwise you will get the compiler error(s)
-*DoTween must have asmdef created
+*DoTween must have the asmdef created from the "Tools" menu
 *Download the repo and place the "DoTweenExt" folder inside asset folder
-
-###Usage
+*Insert this entry into your package.json file.
 ```C#
-"com.kaiyum.pathcreator": "https://github.com/kaiyumcg/Path-Creator.git"
+"com.kaiyum.unityext": "https://github.com/kaiyumcg/UnityExt.git"
 ```
+*All extension method name starts with "Ex"
