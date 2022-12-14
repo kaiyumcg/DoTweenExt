@@ -65,7 +65,7 @@ namespace DTExt
             var completedCount = 0;
             if (sequential == false)
             {
-                graphics.ExForEach((graphic, i) =>
+                graphics.ExForEachSafe((graphic, i) =>
                 {
                     if (graphic != null)
                     {
@@ -194,7 +194,7 @@ namespace DTExt
             var completedCount = 0;
             if (sequential == false)
             {
-                graphics.ExForEach((graphic, i) =>
+                graphics.ExForEachSafe((graphic, i) =>
                 {
                     if (graphic != null)
                     {
@@ -342,7 +342,7 @@ namespace DTExt
             var completedCount = 0;
             if (sequential == false)
             {
-                images.ExForEach((graphic, i) =>
+                images.ExForEachSafe((graphic, i) =>
                 {
                     if (graphic != null)
                     {

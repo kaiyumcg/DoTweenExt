@@ -54,7 +54,7 @@ namespace DTExt
             var completedCount = 0;
             if (sequential == false)
             {
-                transforms.ExForEach((transform, i) =>
+                transforms.ExForEachSafe((transform, i) =>
                 {
                     if (transform != null)
                     {
