@@ -11,46 +11,23 @@ namespace DTExt
     {
         //todo blink possibly do not work, test
         #region Fade
-        public static List<Tween> ExFade(this List<MaskableGraphic> graphics, float alpha, float duration)
-        {
-            return _ExFade(graphics, alpha, duration, null, null, null);
-        }
-        public static List<Tween> ExFade(this List<MaskableGraphic> graphics, float alpha, float duration,
-            MonoBehaviour mono, System.Action OnComplete)
-        {
-            return _ExFade(graphics, alpha, duration, mono, (list) => { OnComplete?.Invoke(); }, null);
-        }
         public static List<Tween> ExFade(this List<MaskableGraphic> graphics, float alpha, float duration,
             params MaskableGraphic[] exceptions)
         {
             return _ExFade(graphics, alpha, duration, null, null, exceptions);
         }
         public static List<Tween> ExFade(this List<MaskableGraphic> graphics, float alpha, float duration,
-            MonoBehaviour mono, System.Action OnComplete, params MaskableGraphic[] exceptions)
+            MonoBehaviour callerContext, System.Action OnComplete = null, params MaskableGraphic[] exceptions)
         {
-            return _ExFade(graphics, alpha, duration, mono, (list) => { OnComplete?.Invoke(); }, exceptions);
+            return _ExFade(graphics, alpha, duration, callerContext, (list) => { OnComplete?.Invoke(); }, exceptions);
         }
-        public static List<Tween> ExFadeSequential(this List<MaskableGraphic> graphics, float alpha, float duration)
+        public static List<Tween> ExFadeSequentially(this List<MaskableGraphic> graphics, float alpha, float duration,
+            MonoBehaviour callerContext, System.Action OnComplete = null, params MaskableGraphic[] exceptions)
         {
-            return _ExFade(graphics, alpha, duration, null, null, null, true);
-        }
-        public static List<Tween> ExFadeSequential(this List<MaskableGraphic> graphics, float alpha, float duration,
-            MonoBehaviour mono, System.Action OnComplete)
-        {
-            return _ExFade(graphics, alpha, duration, mono, (list) => { OnComplete?.Invoke(); }, null, true);
-        }
-        public static List<Tween> ExFadeSequential(this List<MaskableGraphic> graphics, float alpha, float duration,
-            params MaskableGraphic[] exceptions)
-        {
-            return _ExFade(graphics, alpha, duration, null, null, exceptions, true);
-        }
-        public static List<Tween> ExFadeSequential(this List<MaskableGraphic> graphics, float alpha, float duration,
-            MonoBehaviour mono, System.Action OnComplete, params MaskableGraphic[] exceptions)
-        {
-            return _ExFade(graphics, alpha, duration, mono, (list) => { OnComplete?.Invoke(); }, exceptions, true);
+            return _ExFade(graphics, alpha, duration, callerContext, (list) => { OnComplete?.Invoke(); }, exceptions, true);
         }
         static List<Tween> _ExFade(List<MaskableGraphic> graphics, float alpha, float duration,
-            MonoBehaviour mono, System.Action<List<Tween>> OnComplete, MaskableGraphic[] exceptions, bool sequential = false)
+            MonoBehaviour callerContext, System.Action<List<Tween>> OnComplete, MaskableGraphic[] exceptions, bool sequential = false)
         {
             if (graphics.ExIsValid() == false) { return null; }
 
@@ -63,7 +40,7 @@ namespace DTExt
             }
 
             var completedCount = 0;
-            if (sequential == false)
+            if (!sequential)
             {
                 graphics.ExForEachSafe((graphic, i) =>
                 {
@@ -85,9 +62,9 @@ namespace DTExt
                 });
             }
 
-            if (mono != null)
+            if (callerContext != null)
             {
-                mono.StartCoroutine(COR());
+                callerContext.StartCoroutine(COR());
             }
             return result;
             IEnumerator COR()
@@ -140,46 +117,23 @@ namespace DTExt
         #endregion
 
         #region Color
-        public static List<Tween> ExColor(this List<MaskableGraphic> graphics, Color endColor, float duration)
-        {
-            return _ExColor(graphics, endColor, duration, null, null, null);
-        }
-        public static List<Tween> ExColor(this List<MaskableGraphic> graphics, Color endColor, float duration,
-            MonoBehaviour mono, System.Action OnComplete)
-        {
-            return _ExColor(graphics, endColor, duration, mono, (list) => { OnComplete?.Invoke(); }, null);
-        }
         public static List<Tween> ExColor(this List<MaskableGraphic> graphics, Color endColor, float duration,
             params MaskableGraphic[] exceptions)
         {
             return _ExColor(graphics, endColor, duration, null, null, exceptions);
         }
         public static List<Tween> ExColor(this List<MaskableGraphic> graphics, Color endColor, float duration,
-            MonoBehaviour mono, System.Action OnComplete, params MaskableGraphic[] exceptions)
+            MonoBehaviour callerContext, System.Action OnComplete = null, params MaskableGraphic[] exceptions)
         {
-            return _ExColor(graphics, endColor, duration, mono, (list) => { OnComplete?.Invoke(); }, exceptions);
+            return _ExColor(graphics, endColor, duration, callerContext, (list) => { OnComplete?.Invoke(); }, exceptions);
         }
-        public static List<Tween> ExColorSequential(this List<MaskableGraphic> graphics, Color endColor, float duration)
+        public static List<Tween> ExColorSequentially(this List<MaskableGraphic> graphics, Color endColor, float duration,
+            MonoBehaviour callerContext, System.Action OnComplete = null, params MaskableGraphic[] exceptions)
         {
-            return _ExColor(graphics, endColor, duration, null, null, null, true);
-        }
-        public static List<Tween> ExColorSequential(this List<MaskableGraphic> graphics, Color endColor, float duration,
-            MonoBehaviour mono, System.Action OnComplete)
-        {
-            return _ExColor(graphics, endColor, duration, mono, (list) => { OnComplete?.Invoke(); }, null, true);
-        }
-        public static List<Tween> ExColorSequential(this List<MaskableGraphic> graphics, Color endColor, float duration,
-            params MaskableGraphic[] exceptions)
-        {
-            return _ExColor(graphics, endColor, duration, null, null, exceptions, true);
-        }
-        public static List<Tween> ExColorSequential(this List<MaskableGraphic> graphics, Color endColor, float duration,
-            MonoBehaviour mono, System.Action OnComplete, params MaskableGraphic[] exceptions)
-        {
-            return _ExColor(graphics, endColor, duration, mono, (list) => { OnComplete?.Invoke(); }, exceptions, true);
+            return _ExColor(graphics, endColor, duration, callerContext, (list) => { OnComplete?.Invoke(); }, exceptions, true);
         }
         static List<Tween> _ExColor(List<MaskableGraphic> graphics, Color endColor, float duration,
-            MonoBehaviour mono, System.Action<List<Tween>> OnComplete, MaskableGraphic[] exceptions, bool sequential = false)
+            MonoBehaviour callerContext, System.Action<List<Tween>> OnComplete, MaskableGraphic[] exceptions, bool sequential = false)
         {
             if (graphics.ExIsValid() == false) { return null; }
 
@@ -192,31 +146,28 @@ namespace DTExt
             }
 
             var completedCount = 0;
-            if (sequential == false)
+            if (!sequential)
             {
                 graphics.ExForEachSafe((graphic, i) =>
                 {
-                    if (graphic != null)
+                    var doIt = true;
+                    if (exceptions.ExIsValid())
                     {
-                        var doIt = true;
-                        if (exceptions.ExIsValid())
+                        if (exceptions.ExContains(graphic)) { doIt = false; }
+                    }
+                    if (doIt)
+                    {
+                        result[i] = graphic.DOColor(endColor, duration).OnComplete(() =>
                         {
-                            if (exceptions.ExContains(graphic)) { doIt = false; }
-                        }
-                        if (doIt)
-                        {
-                            result[i] = graphic.DOColor(endColor, duration).OnComplete(() =>
-                            {
-                                completedCount++;
-                            });
-                        }
+                            completedCount++;
+                        });
                     }
                 });
             }
 
-            if (mono != null)
+            if (callerContext != null)
             {
-                mono.StartCoroutine(COR());
+                callerContext.StartCoroutine(COR());
             }
             return result;
             IEnumerator COR()
@@ -285,17 +236,8 @@ namespace DTExt
            , fillTarget, duration).OnComplete((() =>
            {
                OnComplete?.Invoke();
-           })).SetEase(Ease.Linear);
+           })).SetEase(ease);
             return tw;
-        }
-        public static List<Tween> ExFillAmount(this List<Image> images, float fillTarget, float duration)
-        {
-            return _ExFillAmount(images, fillTarget, duration, null, null, null);
-        }
-        public static List<Tween> ExFillAmount(this List<Image> images, float fillTarget, float duration,
-            MonoBehaviour mono, System.Action OnComplete)
-        {
-            return _ExFillAmount(images, fillTarget, duration, mono, (list) => { OnComplete?.Invoke(); }, null);
         }
         public static List<Tween> ExFillAmount(this List<Image> images, float fillTarget, float duration,
             params Image[] exceptions)
@@ -303,31 +245,17 @@ namespace DTExt
             return _ExFillAmount(images, fillTarget, duration, null, null, exceptions);
         }
         public static List<Tween> ExFillAmount(this List<Image> images, float fillTarget, float duration,
-            MonoBehaviour mono, System.Action OnComplete, params Image[] exceptions)
+            MonoBehaviour mono, System.Action OnComplete = null, params Image[] exceptions)
         {
             return _ExFillAmount(images, fillTarget, duration, mono, (list) => { OnComplete?.Invoke(); }, exceptions);
         }
-        public static List<Tween> ExFillAmountSequential(this List<Image> images, float fillTarget, float duration)
+        public static List<Tween> ExFillAmountSequentially(this List<Image> images, float fillTarget, float duration,
+            MonoBehaviour callerContext, System.Action OnComplete = null, params Image[] exceptions)
         {
-            return _ExFillAmount(images, fillTarget, duration, null, null, null, true);
-        }
-        public static List<Tween> ExFillAmountSequential(this List<Image> images, float fillTarget, float duration,
-            MonoBehaviour mono, System.Action OnComplete)
-        {
-            return _ExFillAmount(images, fillTarget, duration, mono, (list) => { OnComplete?.Invoke(); }, null, true);
-        }
-        public static List<Tween> ExFillAmountSequential(this List<Image> images, float fillTarget, float duration,
-            params Image[] exceptions)
-        {
-            return _ExFillAmount(images, fillTarget, duration, null, null, exceptions, true);
-        }
-        public static List<Tween> ExFillAmountSequential(this List<Image> images, float fillTarget, float duration,
-            MonoBehaviour mono, System.Action OnComplete, params Image[] exceptions)
-        {
-            return _ExFillAmount(images, fillTarget, duration, mono, (list) => { OnComplete?.Invoke(); }, exceptions, true);
+            return _ExFillAmount(images, fillTarget, duration, callerContext, (list) => { OnComplete?.Invoke(); }, exceptions, true);
         }
         static List<Tween> _ExFillAmount(List<Image> images, float fillTarget, float duration,
-            MonoBehaviour mono, System.Action<List<Tween>> OnComplete, Image[] exceptions, bool sequential = false)
+            MonoBehaviour callerContext, System.Action<List<Tween>> OnComplete, Image[] exceptions, bool sequential = false)
         {
             if (images.ExIsValid() == false) { return null; }
 
@@ -344,27 +272,24 @@ namespace DTExt
             {
                 images.ExForEachSafe((graphic, i) =>
                 {
-                    if (graphic != null)
+                    var doIt = true;
+                    if (exceptions.ExIsValid())
                     {
-                        var doIt = true;
-                        if (exceptions.ExIsValid())
+                        if (exceptions.ExContains(graphic)) { doIt = false; }
+                    }
+                    if (doIt)
+                    {
+                        result[i] = graphic.DOFillAmount(fillTarget, duration).OnComplete(() =>
                         {
-                            if (exceptions.ExContains(graphic)) { doIt = false; }
-                        }
-                        if (doIt)
-                        {
-                            result[i] = graphic.DOFillAmount(fillTarget, duration).OnComplete(() =>
-                            {
-                                completedCount++;
-                            });
-                        }
+                            completedCount++;
+                        });
                     }
                 });
             }
 
-            if (mono != null)
+            if (callerContext != null)
             {
-                mono.StartCoroutine(COR());
+                callerContext.StartCoroutine(COR());
             }
             return result;
             IEnumerator COR()
@@ -417,29 +342,29 @@ namespace DTExt
         #endregion
 
         #region Blink
-        public static Coroutine ExBlinkContinue(this MaskableGraphic graphic, MonoBehaviour scriptCaller, float cycleTime)
+        public static Coroutine ExBlinkContinue(this MaskableGraphic graphic, MonoBehaviour callerContext, float cycleTime)
         {
-            return _ExBlink(scriptCaller, graphic, null, cycleTime, -1f, null);
+            return _ExBlink(callerContext, graphic, null, cycleTime, -1f, null);
         }
-        public static Coroutine ExBlinkUntil(this MaskableGraphic graphic, MonoBehaviour scriptCaller,
+        public static Coroutine ExBlinkUntil(this MaskableGraphic graphic, MonoBehaviour callerContext,
             float cycleTime, WhenToDoFunc stopperCondition, System.Action OnComplete = null)
         {
-            return _ExBlink(scriptCaller, graphic, stopperCondition, cycleTime, -1f, OnComplete);
+            return _ExBlink(callerContext, graphic, stopperCondition, cycleTime, -1f, OnComplete);
         }
-        public static Coroutine ExBlinkUntil(this MaskableGraphic graphic, MonoBehaviour scriptCaller,
+        public static Coroutine ExBlinkUntil(this MaskableGraphic graphic, MonoBehaviour callerContext,
             float cycleTime, float maxTime, System.Action OnComplete = null)
         {
-            return _ExBlink(scriptCaller, graphic, null, cycleTime, maxTime, OnComplete);
+            return _ExBlink(callerContext, graphic, null, cycleTime, maxTime, OnComplete);
         }
-        public static Coroutine ExBlinkUntilConditionOrTime(this MaskableGraphic graphic, MonoBehaviour scriptCaller,
+        public static Coroutine ExBlinkUntilConditionOrTime(this MaskableGraphic graphic, MonoBehaviour callerContext,
             float cycleTime, float maxTime, WhenToDoFunc stopperCondition, System.Action OnComplete = null)
         {
-            return _ExBlink(scriptCaller, graphic, stopperCondition, cycleTime, maxTime, OnComplete);
+            return _ExBlink(callerContext, graphic, stopperCondition, cycleTime, maxTime, OnComplete);
         }
-        static Coroutine _ExBlink(MonoBehaviour mono, MaskableGraphic graphic,
+        static Coroutine _ExBlink(MonoBehaviour callerContext, MaskableGraphic graphic,
             WhenToDoFunc stopperCondition, float cycleTime, float maxTime, System.Action OnComplete)
         {
-            return mono.StartCoroutine(TapToStartBlink(graphic, stopperCondition, cycleTime, maxTime, OnComplete));
+            return callerContext.StartCoroutine(TapToStartBlink(graphic, stopperCondition, cycleTime, maxTime, OnComplete));
             IEnumerator TapToStartBlink(MaskableGraphic graphic, WhenToDoFunc stopperCondition,
                 float cycleTime, float maxTime, System.Action OnComplete)
             {
