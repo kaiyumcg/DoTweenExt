@@ -20,7 +20,7 @@ namespace DTExt
         }
         public static void ExResetDT(this List<Tween> dtList)
         {
-            dtList.ExForEachSafe((dt) =>
+            dtList.ExForEachSafeCustomClass((dt) =>
             {
                 if (dt != null) { dt.ExResetDT(); }
             });
